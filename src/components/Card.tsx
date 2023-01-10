@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({pokemon,pokemonJa,lang}) => {
+const Card = ({pokemon,pokemonJa,lang,jaNumber,chNumber}) => {
     return(   
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <div className='flex flex-row'>
@@ -10,8 +10,8 @@ const Card = ({pokemon,pokemonJa,lang}) => {
         <div className='flex flex-col mt-3 mx-3'>
             <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>No.{pokemon.id}</div>
             <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>{lang == 'ja' ? pokemonJa.genera[0].genus:pokemonJa.genera[2].genus}</div>
-            <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>{lang == 'ja' ? '高さ':'身长'}:{pokemon.height/10}m</div>
-            <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>{lang == 'ja' ? '重さ':'体重'}:{pokemon.weight/10}kg</div>
+            <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>{lang == 'ja' ? '高さ':'身高'}:{pokemon.height/10}m</div>
+            <div className='mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white'>{lang == 'ja' ? '重さ':'體重'}:{pokemon.weight/10}kg</div>
         </div>
         </div>
         
@@ -19,7 +19,7 @@ const Card = ({pokemon,pokemonJa,lang}) => {
             <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{lang == 'ja' ? pokemonJa.names[0].name:pokemonJa.names[3].name}</h5>
             </a>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{lang == 'ja' ? pokemonJa["flavor_text_entries"][22]["flavor_text"]:pokemonJa["flavor_text_entries"][56]["flavor_text"]}</p>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{lang == 'ja' ? pokemonJa["flavor_text_entries"][jaNumber]["flavor_text"]:pokemonJa["flavor_text_entries"][chNumber]["flavor_text"]}</p>
             
         </div>
     </div>

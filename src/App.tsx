@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { getAllPokemon, getPokemon } from './utils/pokemon.js';
-import { useEffect, useState } from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
 import Card from './components/Card.js';
 import { Navbar } from './components/Navbar.js';
 import React from 'react'
@@ -98,7 +98,19 @@ function App() {
           <div className='grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
             {pokemonData.map((pokemon,i) => {
               let pokemonJa = pokemonDataJa[i];
-              return( <Card key={i} pokemon={pokemon} pokemonJa={pokemonJa} lang={lang}/>
+              let jaNumber = 22;
+              let chNumber = 56;
+              console.log(pokemonJa);
+              pokemonJa["flavor_text_entries"].forEach((flavor,index) =>{
+                if(flavor.language.name === 'ja-Hrkt'){
+                  jaNumber = index;
+                }
+                if(flavor.language.name === 'zh-Hant'){
+                  chNumber = index;
+                }
+              }
+              )
+              return( <Card key={i} pokemon={pokemon} pokemonJa={pokemonJa} lang={lang} jaNumber={jaNumber} chNumber={chNumber}/>
               )   
             }
             )}
