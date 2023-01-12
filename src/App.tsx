@@ -1,4 +1,5 @@
-//@ts-nocheck
+ // @ts-nocheck 
+ 
 import { getAllPokemon, getPokemon } from './utils/pokemon.js';
 import { useDebugValue, useEffect, useState } from 'react';
 import Card from './components/Card.js';
@@ -64,15 +65,48 @@ function App() {
     );
     setPokemonData(_PokemonData);
     setPokemonDataJa(_PokemonDataJa);
+    console.log(data);
   }
   console.log(pokemonData);
   console.log(pokemonDataJa);
 
+  const handleRandomPage = async () => {
+    setLoading(true);
+    const data = [];
+    for (let i=0;i<20;i++){
+      let randomPokemonNumberStr = (1 + Math.floor(Math.random() * 800)).toString();
+      console.log(randomPokemonNumberStr);
+      data.push('https://pokeapi.co/api/v2/pokemon/' + randomPokemonNumberStr + '/');
+    }
+    let _PokemonData = await Promise.all(
+      data.map((pokemon) => {
+        let pokemonRecord = getPokemon(pokemon);
+        
+        return pokemonRecord;
+      }) 
+    );
+    
+    let _PokemonDataJa = await Promise.all(
+      _PokemonData.map((pokemon) => {
+        let pokemonRecordJa = getPokemon(pokemon.species.url);
+        return pokemonRecordJa;
+      }
+
+      )
+    );
+    setPokemonData(_PokemonData);
+    setPokemonDataJa(_PokemonDataJa);
+    setLoading(false);
+  }
+  const handleHandleRandomPage = () => {
+    handleRandomPage();
+  }
   const handlePrevPage = async () => {
     if(!prevURL) return;
     setLoading(true);
     let data = await getAllPokemon(prevURL);
     await loadPokemon(data.results);
+    
     setNextURL(data.next);
     setPrevURL(data.previous);
     setLoading(false);
@@ -89,7 +123,7 @@ function App() {
       }
   return (
     <div>
-      <Navbar handleLangChange={handleLangChange} lang={lang}/>
+      <Navbar handleLangChange={handleLangChange} handleHandleRandomPage={handleHandleRandomPage} lang={lang}/>
       <div className="App">
       {loading ? (
         <h1>ロード中…</h1>
